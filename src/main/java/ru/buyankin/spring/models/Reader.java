@@ -8,10 +8,10 @@ public class Reader {
     private int id;
 
     @NotEmpty(message = "Name should not be empty!")
-    @Size(min = 10, max = 60, message = "Name should be between 10 and 60 characters")
+    @Size(min = 20, max = 60, message = "Name should be between 20 and 60 characters")
     private String name;
 
-    @Min(value = 0, message = "Birth year should be greater than 0")
+    @Min(value = 1900, message = "Birth year should be greater than 1900")
     private int birthYear;
 
     public Reader(int id, String name, int birthYear) {

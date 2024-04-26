@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Читатель</title>
+</head>
+
+<body>
+<p th:text="${reader.getName()} + ', ' + ${reader.getBirthYear()}">VALUE</p>
+<hr/>
+
+<form th:method="POST"
+      th:action="@{/readers/{id}/edit(id=${reader.getId()})}">
+    <input type="submit" value="Редактировать"/>
+</form>
+<form th:method="DELETE"
+      th:action="@{/readers/{id} (id=${reader.getId()})}">
+    <input type="submit" value="Удалить">
+</form>
+
+</body>
+</html>

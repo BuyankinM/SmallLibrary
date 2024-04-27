@@ -28,6 +28,7 @@ public class ReadersController {
     @GetMapping("/{id}")
     public String reader(@PathVariable("id") int id, Model model) {
         model.addAttribute("reader", readerDao.getReader(id));
+        model.addAttribute("books", readerDao.getBooksOfReader(id));
         return "readers/show";
     }
 

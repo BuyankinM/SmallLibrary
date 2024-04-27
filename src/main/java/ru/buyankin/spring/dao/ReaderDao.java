@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import ru.buyankin.spring.models.Book;
 import ru.buyankin.spring.models.Reader;
 
 import java.util.List;
@@ -47,5 +48,11 @@ public class ReaderDao {
         jdbcTemplate.update("INSERT INTO reader(name, birthyear) VALUES (?, ?)",
                 reader.getName(),
                 reader.getBirthYear());
+    }
+
+    public List<Book> getBooksOfReader(int id) {
+        return jdbcTemplate.query("SELECT * FROM book WHERE reader_id = ? order by title, author",
+                new BeanPropertyRowMapper<>(Book.class),
+                id);
     }
 }

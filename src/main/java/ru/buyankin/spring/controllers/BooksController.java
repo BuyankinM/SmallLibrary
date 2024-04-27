@@ -28,6 +28,7 @@ public class BooksController {
     @GetMapping("/{id}")
     public String showBook(@PathVariable("id") int id, Model model) {
         model.addAttribute("book", bookDao.getBook(id));
+        model.addAttribute("readerFio", bookDao.getReaderFIO(id));
         return "books/show";
     }
 
@@ -68,5 +69,11 @@ public class BooksController {
     public String delete(@PathVariable("id") int id) {
         bookDao.delete(id);
         return "redirect:/books";
+    }
+
+    @PostMapping("/free/{id}")
+    public String free(@PathVariable("id") int id) {
+        bookDao.freeBook(id);
+        return "redirect:/books/" + id;
     }
 }

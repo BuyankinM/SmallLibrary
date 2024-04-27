@@ -9,6 +9,15 @@
 <p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">VALUE</p>
 <hr/>
 
+<div th:if="${readerFio}">
+    <form th:method="POST"
+          th:action="@{/books/free/{id}(id=${book.getId()})}">
+        <p th:text="'Книга сейчас у: ' + ${readerFio}">Книга у читателя</p>
+        <input type="submit" value="Освободить книгу"/>
+    </form>
+    <hr/>
+</div>
+
 <form th:method="POST"
       th:action="@{/books/{id}/edit(id=${book.getId()})}">
     <input type="submit" value="Редактировать"/>

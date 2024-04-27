@@ -31,6 +31,21 @@ public class ReadersController {
         return "readers/show";
     }
 
+    @GetMapping("/new")
+    public String newReader(@ModelAttribute("reader") Reader reader) {
+        return "readers/new";
+    }
+
+    @PostMapping()
+    public String createReader(@ModelAttribute("reader") @Valid Reader reader,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "readers/new";
+
+        readerDao.save(reader);
+        return "redirect:/readers";
+    }
+
     @PostMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
         model.addAttribute("reader", readerDao.getReader(id));

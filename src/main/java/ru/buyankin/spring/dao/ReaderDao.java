@@ -42,4 +42,10 @@ public class ReaderDao {
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM reader WHERE id=?", id);
     }
+
+    public void save(Reader reader) {
+        jdbcTemplate.update("INSERT INTO reader(name, birthyear) VALUES (?, ?)",
+                reader.getName(),
+                reader.getBirthYear());
+    }
 }

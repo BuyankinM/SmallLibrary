@@ -57,9 +57,10 @@ public class ReaderDao {
     }
 
     public Optional<Reader> checkUniqueName(Reader reader) {
-        return jdbcTemplate.query("SELECT * FROM reader WHERE name=?",
-                new BeanPropertyRowMapper<>(Reader.class),
-                reader.getName())
+        return jdbcTemplate.query("SELECT * FROM reader WHERE name = ? and id != ?",
+                        new BeanPropertyRowMapper<>(Reader.class),
+                        reader.getName(),
+                        reader.getId())
                 .stream()
                 .findFirst();
     }

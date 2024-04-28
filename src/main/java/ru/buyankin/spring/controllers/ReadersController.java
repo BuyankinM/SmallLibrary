@@ -63,6 +63,7 @@ public class ReadersController {
                         BindingResult bindingResult,
                         @PathVariable("id") int id) {
 
+        readerValidator.validate(reader, bindingResult);
         if (bindingResult.hasErrors())
             return "readers/edit";
 

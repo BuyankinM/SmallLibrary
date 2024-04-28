@@ -6,14 +6,12 @@
 </head>
 <body>
 
+<p><b><u>Читатели:</u></b></p>
 <div th:each="reader : ${readers}">
     <a th:href="@{/readers/{id}(id=${reader.getId()})}"
        th:text="${reader.getName() + ', ' + reader.getBirthYear()}">user</a>
 </div>
-
-<br/>
 <hr/>
-
 <a href="/readers/new">Добавить читателя</a>
 
 </body>

@@ -15,8 +15,23 @@
         <p th:text="'Книга сейчас у: ' + ${readerFio}">Книга у читателя</p>
         <input type="submit" value="Освободить книгу"/>
     </form>
-    <hr/>
 </div>
+
+<div th:unless="${readerFio}">
+    <form th:method="PATCH"
+          th:action="@{/books/assign/{id}(id=${book.getId()})}">
+        <p>Эта книга свободна. Кому назначить её?</p>
+
+        <label for="reader">Выберите человека</label>
+        <select th:object="${reader}" th:field="*{id}" id="reader">
+            <option th:each="reader : ${readers}" th:value="${reader.getId()}"
+                    th:text="${reader.getName()}"></option>
+        </select>
+        <input type="submit" value="Назначить книгу"/>
+    </form>
+</div>
+
+<hr/>
 
 <form th:method="POST"
       th:action="@{/books/{id}/edit(id=${book.getId()})}">

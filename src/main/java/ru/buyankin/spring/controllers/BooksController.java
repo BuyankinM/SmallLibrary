@@ -7,16 +7,20 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.buyankin.spring.dao.BookDao;
+import ru.buyankin.spring.dao.ReaderDao;
 import ru.buyankin.spring.models.Book;
+import ru.buyankin.spring.models.Reader;
 
 @Controller
 @RequestMapping("/books")
 public class BooksController {
     private final BookDao bookDao;
+    private final ReaderDao readerDao;
 
     @Autowired
-    public BooksController(BookDao bookDao) {
+    public BooksController(BookDao bookDao, ReaderDao readerDao) {
         this.bookDao = bookDao;
+        this.readerDao = readerDao;
     }
 
     @GetMapping()
@@ -26,9 +30,12 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public String showBook(@PathVariable("id") int id, Model model) {
+    public String showBook(@PathVariable("id") int id,
+                           @ModelAttribute("reader") Reader reader,
+                           Model model) {
         model.addAttribute("book", bookDao.getBook(id));
         model.addAttribute("readerFio", bookDao.getReaderFIO(id));
+        model.addAttribute("readers", readerDao.index());
         return "books/show";
     }
 
@@ -74,6 +81,13 @@ public class BooksController {
     @PostMapping("/free/{id}")
     public String free(@PathVariable("id") int id) {
         bookDao.freeBook(id);
+        return "redirect:/books/" + id;
+    }
+
+    @PatchMapping("/assign/{id}")
+    public String assign(@PathVariable("id") int id,
+                       @ModelAttribute("reader") Reader reader) {
+        bookDao.assignBook(id, reader.getId());
         return "redirect:/books/" + id;
     }
 }

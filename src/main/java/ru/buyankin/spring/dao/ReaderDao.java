@@ -55,4 +55,12 @@ public class ReaderDao {
                 new BeanPropertyRowMapper<>(Book.class),
                 id);
     }
+
+    public Optional<Reader> checkUniqueName(Reader reader) {
+        return jdbcTemplate.query("SELECT * FROM reader WHERE name=?",
+                new BeanPropertyRowMapper<>(Reader.class),
+                reader.getName())
+                .stream()
+                .findFirst();
+    }
 }

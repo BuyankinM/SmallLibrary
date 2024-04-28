@@ -8,15 +8,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.buyankin.spring.dao.ReaderDao;
 import ru.buyankin.spring.models.Reader;
+import ru.buyankin.spring.util.ReaderValidator;
 
 @Controller
 @RequestMapping("/readers")
 public class ReadersController {
     private final ReaderDao readerDao;
+    private final ReaderValidator readerValidator;
 
     @Autowired
-    public ReadersController(ReaderDao readerDao) {
+    public ReadersController(ReaderDao readerDao, ReaderValidator readerValidator) {
         this.readerDao = readerDao;
+        this.readerValidator = readerValidator;
     }
 
     @GetMapping()
@@ -40,6 +43,8 @@ public class ReadersController {
     @PostMapping()
     public String createReader(@ModelAttribute("reader") @Valid Reader reader,
                                BindingResult bindingResult) {
+
+        readerValidator.validate(reader, bindingResult);
         if (bindingResult.hasErrors())
             return "readers/new";
 
